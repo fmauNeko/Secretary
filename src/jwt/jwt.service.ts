@@ -1,7 +1,15 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
-import { exportJWK, generateKeyPair, JWK, KeyLike, SignJWT } from 'jose';
+import {
+  exportJWK,
+  generateKeyPair,
+  JWK,
+  JWTPayload,
+  jwtVerify,
+  KeyLike,
+  SignJWT,
+} from 'jose';
 
 @Injectable()
 export class JwtService implements OnModuleInit {
@@ -30,6 +38,16 @@ export class JwtService implements OnModuleInit {
       .setProtectedHeader({ alg: 'EdDSA', jwk: await this.getPublicKey() })
       .setSubject(user.id)
       .sign(this.privateKey);
+  }
+
+  async verifyToken(token: string): Promise<JWTPayload> {
+    const decodedToken = await jwtVerify(token, this.publicKey, {
+      algorithms: ['EdDSA'],
+      audience: this.hostname,
+      issuer: this.hostname,
+    });
+
+    return decodedToken.payload;
   }
 
   async getPublicKey(): Promise<JWK> {
