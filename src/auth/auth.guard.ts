@@ -5,15 +5,15 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { User } from '@prisma/client';
 import { Request } from 'express';
 import { JwtService } from '../jwt/jwt.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { UserDto } from '../users/dto/user.dto.js';
 import { IS_PUBLIC_KEY } from './public.decorator.js';
 
 declare module 'express' {
   interface Request {
-    user?: User;
+    user?: UserDto;
   }
 }
 
@@ -44,6 +44,8 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyToken(token);
       const user = await this.prismaService.user.findUniqueOrThrow({
         where: { id: payload.sub },
+        include: { characters: true },
+        omit: { passwordHash: true },
       });
       request.user = user;
     } catch {
