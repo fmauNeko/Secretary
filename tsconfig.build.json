@@ -6,7 +6,7 @@
     "dist",
     "**/*spec.ts",
     "commitlint.config.ts",
-    "eslint.config.js",
+    "eslint.config.ts",
     "vitest.config.ts",
     "vitest.config.e2e.ts"
   ]

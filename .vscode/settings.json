@@ -21,5 +21,8 @@
     "titleBar.inactiveBackground": "#23765099",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#237650"
+  "peacock.color": "#237650",
+  "eslint.options": {
+    "flags": ["unstable_ts_config"]
+  }
 }

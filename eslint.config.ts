@@ -1,4 +1,5 @@
 import eslint from '@eslint/js';
+import type { FlatConfig } from '@typescript-eslint/utils/ts-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -15,7 +16,7 @@ export default tseslint.config(
       parserOptions: {
         projectService: true,
         sourceType: 'module',
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: __dirname,
       },
     },
     rules: {
@@ -24,4 +25,4 @@ export default tseslint.config(
   },
   // @ts-expect-error We're using an alpha version of typescript-eslint
   eslintPluginPrettierRecommended,
-);
+) satisfies FlatConfig.Config[];
