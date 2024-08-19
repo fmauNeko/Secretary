@@ -67,5 +67,8 @@
     "typescript-eslint": "8.0.1",
     "unplugin-swc": "^1.5.1",
     "vitest": "^2.0.5"
-  }
+  },
+  "trustedDependencies": [
+    "@nestjs/core"
+  ]
 }
